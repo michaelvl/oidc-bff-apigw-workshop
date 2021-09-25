@@ -66,7 +66,7 @@ const doBFFGetUserInfo = async () => {
     console.log('Userinfo data', data);
     if ('preferred_username' in data) {
 	$('#loginState').html('Logged in as <b>'+data['preferred_username']+'</b>');
-	$('#userInfo').html(JSON.stringify(data));
+	$('#userInfo').html(JSON.stringify(data, null, '  '));
 	//$('#loginState').html('Logged in as'+data['sub']);
     } else {
 	$('#userInfo').html('');
@@ -89,7 +89,7 @@ const doAPIListObjects = async () => {
 
 window.addEventListener('load', () => {
     $('#loginState').html('Unknown');
-    $('#userInfo').html('No UserInfo');
+    $('#userInfo').html('No UserInfo. Click "Get User Info" above to read user info from BFF');
 
     $('#doLogin').click(doBFFLogin);
     $('#doLogout').click(doBFFLogout);
