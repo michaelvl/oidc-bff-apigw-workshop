@@ -50,14 +50,17 @@ const doBFFLogout = async () => {
     location.href = data['logoutUrl']
 }
 
-const doBFFContinue = async (pageUrl) => {
-    data = await doBFFRequest('POST', '/continue', {pageUrl});
-    console.log('Continue data', data);
+const doBFFPageLoad = async (pageUrl) => {
+    data = await doBFFRequest('POST', '/pageload', {pageUrl});
+    console.log('Pageload data', data);
     if (data && 'loggedIn' in data && data['loggedIn']) {
 	$('#loginState').html('Logged in (click "Get User Info" for more user data)');
-	//$('#loginState').html('Logged in as'+data['sub']);
     } else {
 	$('#loginState').html('Not logged in');
+    }
+    if (data && 'handledAuth' in data && data['handledAuth']) {
+	// The pageload finished the login, clear code from location
+	history.replaceState({}, document.title, '/');
     }
 }
 
@@ -67,7 +70,6 @@ const doBFFGetUserInfo = async () => {
     if ('preferred_username' in data) {
 	$('#loginState').html('Logged in as <b>'+data['preferred_username']+'</b>');
 	$('#userInfo').html(JSON.stringify(data, null, '  '));
-	//$('#loginState').html('Logged in as'+data['sub']);
     } else {
 	$('#userInfo').html('');
     }
@@ -98,5 +100,5 @@ window.addEventListener('load', () => {
     $('#doAPIListObjects').click(doAPIListObjects);
 
     console.log('Location: ', location.href);
-    doBFFContinue(location.href);
+    doBFFPageLoad(location.href);
 });
