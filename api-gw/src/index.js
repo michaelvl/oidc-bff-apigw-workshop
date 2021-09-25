@@ -53,7 +53,9 @@ if (redis_url) {
 app.use(session(session_config));
 
 function onProxyReq(proxyReq, req, res) {
-    proxyReq.setHeader('authorization', 'Bearer '+req.session.access_token);
+    if (req.session.access_token) {
+	proxyReq.setHeader('authorization', 'Bearer '+req.session.access_token);
+    }
 }
 
 app.use('/api', createProxyMiddleware({
