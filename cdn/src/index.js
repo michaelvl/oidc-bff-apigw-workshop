@@ -2,7 +2,7 @@ const express = require('express');
 const serveStatic = require('serve-static');
 
 const port = process.env.CLIENT_PORT || 5000;
-const dist = process.env.STATIC_FILES_PATH || '../spa/dist';
+const dist = process.env.STATIC_FILES_PATH;
 const csp_connect_sources = process.env.CSP_CONNECT_SOURCES || ''
 
 const app = express();
