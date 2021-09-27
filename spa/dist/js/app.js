@@ -47,6 +47,11 @@ const doBFFLogin = async () => {
     location.href = data['authRedirUrl']
 }
 
+const doBFFRefresh = async () => {
+    data = await doBFFRequest('POST', '/refresh', null);
+    console.log('Refresh data', data);
+}
+
 const doBFFLogout = async () => {
     data = await doBFFRequest('GET', '/logout', null);
     console.log('Logout data', data);
@@ -57,9 +62,9 @@ const doBFFPageLoad = async (pageUrl) => {
     data = await doBFFRequest('POST', '/pageload', {pageUrl});
     console.log('Pageload data', data);
     if (data && 'loggedIn' in data && data['loggedIn']) {
-	$('#loginState').html('Logged in (click "Get User Info" for more user data)');
+	$('#loginState').html('Logged in (click "Get User Info" for more user data)').removeClass('boxed-red').addClass('boxed-green');
     } else {
-	$('#loginState').html('Not logged in');
+	$('#loginState').html('Not logged in').removeClass('boxed-green').addClass('boxed-red');
     }
     if (data && 'handledAuth' in data && data['handledAuth']) {
 	// The pageload finished the login, clear code from location
@@ -110,6 +115,7 @@ window.addEventListener('load', () => {
     $('#doLogin').click(doBFFLogin);
     $('#doLogout').click(doBFFLogout);
     $('#doGetUserInfo').click(doBFFGetUserInfo);
+    $('#doRefreshTokens').click(doBFFRefresh);
     $('#doAPIWrite').click(doAPIWrite);
     $('#doAPIListObjects').click(doAPIListObjects);
 
