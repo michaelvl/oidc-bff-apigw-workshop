@@ -22,7 +22,6 @@ const doRequest = async (method, baseUrl, path, data) => {
 	return null;
     } catch (error) {
 	console.log('Error', error);
-	//showError(error);
 	return null;
     }
 }
@@ -42,7 +41,7 @@ const doSelfRequest = async (method, path, data) => {
 }
 
 const doBFFLogin = async () => {
-    data = await doBFFRequest('GET', '/start', null);
+    data = await doBFFRequest('POST', '/start', null);
     console.log('Login data', data);
     location.href = data['authRedirUrl']
 }
@@ -53,7 +52,7 @@ const doBFFRefresh = async () => {
 }
 
 const doBFFLogout = async () => {
-    data = await doBFFRequest('GET', '/logout', null);
+    data = await doBFFRequest('POST', '/logout', null);
     console.log('Logout data', data);
     location.href = data['logoutUrl']
 }
@@ -75,11 +74,11 @@ const doBFFPageLoad = async (pageUrl) => {
 const doBFFGetUserInfo = async () => {
     data = await doBFFRequest('GET', '/userinfo', null);
     console.log('Userinfo data', data);
-    if ('preferred_username' in data) {
-	$('#loginState').html('Logged in as <b>'+data['preferred_username']+'</b>');
-	$('#userInfo').html(JSON.stringify(data, null, '  '));
+    if (Object.keys(data).length === 0) {
+	$('#userInfo').html('**ERROR** (tokens expired?)');
     } else {
-	$('#userInfo').html('');
+	$('#loginState').html('Logged in as <b>'+data['preferred_username']+'</b>').removeClass('boxed-red').addClass('boxed-green');
+	$('#userInfo').html(JSON.stringify(data, null, '  '));
     }
 }
 
@@ -88,13 +87,22 @@ const doAPIWrite = async () => {
     console.log('API writing data', data);
     data = await doAPIRequest('POST', '/api/object', {data});
     console.log('API write response', data);
-    $('#objectList').html('');
+    if (data) {
+	$('#objectList').html('');
+	$('#objectDataInfo').html('**ERROR** (not logged in?)');
+    } else {
+	$('#objectDataInfo').html('**ERROR** (not logged in?)');
+    }
 }
 
 const doAPIListObjects = async () => {
     data = await doAPIRequest('GET', '/api/objects', null);
     console.log('API list objects response', data);
-    $('#objectList').html(data.join('<br>'));
+    if (data) {
+	$('#objectList').html(data.join('<br>'));
+    } else {
+	$('#objectList').html('**ERROR** (not logged in?)');
+    }
 }
 
 async function ensureConfig() {
