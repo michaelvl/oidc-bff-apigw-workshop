@@ -89,9 +89,9 @@ const doAPIWrite = async () => {
     console.log('API write response', data);
     if (data) {
 	$('#objectList').html('');
-	$('#objectDataInfo').html('**ERROR** (not logged in?)');
+	$('#objectDataInfo').html('Created new object with ID '+data.id);
     } else {
-	$('#objectDataInfo').html('**ERROR** (not logged in?)');
+	$('#objectDataInfo').html('**ERROR** (not logged in or token expired?)');
     }
 }
 
@@ -101,14 +101,14 @@ const doAPIListObjects = async () => {
     if (data) {
 	$('#objectList').html(data.join('<br>'));
     } else {
-	$('#objectList').html('**ERROR** (not logged in?)');
+	$('#objectList').html('**ERROR** (not logged in or token expired?)');
     }
 }
 
 async function ensureConfig() {
     if (! localStorage.getItem('configuration')) {
 	console.log('Loading configuration');
-	data = await doSelfRequest('GET', 'config.json', null);
+	data = await doSelfRequest('GET', 'config/config.json', null);
 	console.log('Config response', data);
 	localStorage.setItem('configuration', JSON.stringify(data));
     }
