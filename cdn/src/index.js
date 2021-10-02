@@ -2,7 +2,7 @@ const express = require('express');
 const serveStatic = require('serve-static');
 const logger = require('morgan');
 
-const port = process.env.CLIENT_PORT || 5000;
+const port = process.env.CLIENT_PORT || 5030;
 const dist = process.env.STATIC_FILES_PATH;
 const csp_connect_sources = process.env.CSP_CONNECT_SOURCES || null;
 const csp_script_sources = process.env.CSP_SCRIPT_SOURCES || null;
