@@ -1,4 +1,5 @@
 *~
 api-gw/node_modules/**
 cdn/node_modules/**
+router/node_modules/**
 spa/node_modules/**
