@@ -34,10 +34,6 @@ const doAPIRequest = async (method, path, data) => {
     return doRequest(method, '/api', path, data);
 }
 
-const doSelfRequest = async (method, path, data) => {
-    return doRequest(method, '/', path, data);
-}
-
 const doBFFLogin = async () => {
     data = await doBFFRequest('POST', '/start', null);
     console.log('Login data', data);
