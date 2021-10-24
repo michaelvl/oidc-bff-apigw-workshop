@@ -9,8 +9,8 @@ app.use(logger('combined'));
 
 app.use('/login', createProxyMiddleware({
     target: "http://localhost:5010",
-    changeOrigin: true,
-    pathRewrite: {'^/login' : ''},
+    changeOrigin: true  //,
+    //pathRewrite: {'^/login' : ''},
 }));
 
 app.use('/api', createProxyMiddleware({
