@@ -3,6 +3,9 @@
 This repo contain a demonstration of a single-page application (SPA)
 using login with OIDC through a backend-for-frontend (BFF).
 
+> ![Architecture](images/bff-overview.png)
+
+
 ## Prerequisites
 
 The demonstration use the identity-provider from

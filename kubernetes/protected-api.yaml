@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: protected-api
+  name: protected-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: protected-api
+  template:
+    metadata:
+      labels:
+        app: protected-api
+    spec:
+      containers:
+      - image: ghcr.io/michaelvl/oidc-bff-apigw-workshop@sha256:26320a9c6f378128ab97a8583bd80f0c415fbf32741c6339953eeb17b98c12c2
+        imagePullPolicy: IfNotPresent
+        name: cdn
+        command: ["node", "src/index.js"]
+        workingDir: /apps/protected-api
+        env:
+        - name: OIDC_ISSUER_URL
+          value: http://${IDENTITY_PROVIDER_GATEWAY_IP}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: protected-api
+  name: protected-api
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5010
+  selector:
+    app: protected-api
+  type: ClusterIP
