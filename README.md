@@ -63,7 +63,7 @@ export SPA_GATEWAY_IP=$(kubectl get gateway spa -o jsonpath='{.status.addresses[
 echo "SPA IP: $SPA_GATEWAY_IP"
 ```
 
-Finally, deploy the SPA backend component; `cdn` provides static web
+Next, deploy the SPA backend component; `cdn` provides static web
 resource, `login-bff` provides an OIDC implementation, `redis`
 provides a cookie session storage shared between `bff` and `api-gw`:
 
@@ -73,13 +73,15 @@ kubectl apply -f oidc-bff-apigw-workshop/kubernetes/spa-redis-session-store.yaml
 cat oidc-bff-apigw-workshop/kubernetes/spa-login-bff.yaml | envsubst | kubectl apply -f -
 ```
 
-**TODO: Deploy api-gw and object store**
+Finally, deploy the API gateway (which adds an OIDC token header) and
+the protected API (which authorizes access using OIDC tokens):
 
 ```
 kubectl apply -f oidc-bff-apigw-workshop/kubernetes/spa-api-gw.yaml
-cat oidc-oauth2-workshop/kubernetes/protected-api.yaml | envsubst | kubectl apply -f -
+cat oidc-bff-apigw-workshop/kubernetes/protected-api.yaml | envsubst | kubectl apply -f -
 ```
 
+## Debugging
 
 ```
 stern -l app=spa-login-bff
@@ -87,11 +89,13 @@ stern -l app=spa-api-gw
 stern -l app=protected-api
 ```
 
+## Trying it Out!
 
 With all components deployed, open the IP stored in environment
 varible `SPA_GATEWAY_IP` in a browser. Expect it to look like
 below. The `Object Store` title refers to that this client allow us to
-read and write objects in an object-store.
+read and write objects in an object-store (a 'protected API' that
+require OIDC login).
 
 > ![Initial SPA page](images/spa-pre-login.png)
 
