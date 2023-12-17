@@ -119,3 +119,8 @@ Click `Get User Info` to load user information and let the SPA show
 the logged-in user name:
 
 > ![SPA with loaded userdata](images/spa-logged-in-with-userdata.png)
+
+Try clicking `List Objects` to list the currently defined objects in
+the protected API. Initially a single object is created, and the UUID
+of this object will be shown. Use the `Create Object` to create
+additional objects.
