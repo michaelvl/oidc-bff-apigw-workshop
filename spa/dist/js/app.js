@@ -81,7 +81,7 @@ const doBFFGetUserInfo = async () => {
 const doAPIWrite = async () => {
     let data = $('#objectData').val();
     console.log('API writing data', data);
-    data = await doAPIRequest('POST', '/api/object', {data});
+    data = await doAPIRequest('POST', '/object', {data});
     console.log('API write response', data);
     if (data) {
 	$('#objectList').html('');
@@ -92,7 +92,7 @@ const doAPIWrite = async () => {
 }
 
 const doAPIListObjects = async () => {
-    data = await doAPIRequest('GET', '/api/objects', null);
+    data = await doAPIRequest('GET', '/objects', null);
     console.log('API list objects response', data);
     if (data) {
 	$('#objectList').html(data.join('<br>'));
