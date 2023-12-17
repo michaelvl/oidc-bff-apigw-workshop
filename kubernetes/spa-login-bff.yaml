@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spa-login-bff
+  name: spa-login-bff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spa-login-bff
+  template:
+    metadata:
+      labels:
+        app: spa-login-bff
+    spec:
+      containers:
+      - image: ghcr.io/michaelvl/oidc-oauth2-bff:latest
+        imagePullPolicy: IfNotPresent
+        name: client
+        command: ["node", "dist/index.js"]
+        workingDir: /apps/bff
+        env:
+        - name: CLIENT_ID
+          value: client_id
+        - name: CLIENT_SECRET
+          value: client-secret-unused-idp-accept-all-clients
+        - name: REDIRECT_URL
+          value: http://${SPA_GATEWAY_IP}
+        - name: OIDC_ISSUER_URL
+          value: http://${IDENTITY_PROVIDER_GATEWAY_IP}
+        - name: REDIS_URL
+          value: redis://session-store
+        - name: SESSION_SECRET
+          value: ASecretDontTell
+        - name: SECURE_COOKIE
+          value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: spa-login-bff
+  name: spa-login-bff
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5010
+  selector:
+    app: spa-login-bff
+  type: ClusterIP

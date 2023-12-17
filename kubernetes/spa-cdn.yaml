@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spa-cdn
+  name: spa-cdn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spa-cdn
+  template:
+    metadata:
+      labels:
+        app: spa-cdn
+    spec:
+      containers:
+      - image: ghcr.io/michaelvl/oidc-bff-apigw-workshop:latest
+        imagePullPolicy: IfNotPresent
+        name: cdn
+        command: ["node", "src/index.js"]
+        workingDir: /apps/cdn
+        env:
+        - name: CLIENT_PORT
+          value: "5000"
+        - name: STATIC_FILES_PATH
+          value: "/apps/spa"
+        - name: CSP_SCRIPT_SOURCES
+          value: "https://code.jquery.com https://unpkg.com"
+        - name: CSP_CONNECT_SOURCES
+          value: ""
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: spa-cdn
+  name: spa-cdn
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: spa-cdn
+  type: ClusterIP
