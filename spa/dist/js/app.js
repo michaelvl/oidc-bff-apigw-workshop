@@ -26,10 +26,12 @@ const doRequest = async (method, baseUrl, path, data) => {
     }
 }
 
+// All BFF operations are rooted at /login
 const doBFFRequest = async (method, path, data) => {
     return doRequest(method, '/login', path, data);
 }
 
+// All API operations are rooted at /api
 const doAPIRequest = async (method, path, data) => {
     return doRequest(method, '/api', path, data);
 }

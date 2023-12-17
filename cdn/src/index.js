@@ -16,7 +16,7 @@ app.use(logger('combined'));
 if (csp_connect_sources || csp_script_sources) {
     console.log('Using CPS, connect-src', csp_connect_sources, 'script-src', csp_script_sources);
     app.use((req, res, next) => {
-	// See https://infosec.mozilla.org/guidelines/web_security
+	// https://infosec.mozilla.org/guidelines/web_security#content-security-policy
 	let policy = "default-src 'none';";
 	policy += " connect-src 'self' " + csp_connect_sources + ";";
 	policy += " script-src 'self' " + csp_script_sources + ";";
