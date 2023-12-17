@@ -73,13 +73,13 @@ kubectl apply -f oidc-bff-apigw-workshop/kubernetes/spa-redis-session-store.yaml
 cat oidc-bff-apigw-workshop/kubernetes/spa-login-bff.yaml | envsubst | kubectl apply -f -
 ```
 
-**TODO: Deploy api-gw**
+**TODO: Deploy api-gw and object store**
 
-```
-stern -l app=spa-login-bff
-```
 
-With all components deploy, open the IP in `$SPA_GATEWAY_IP` in a browser. Expect it to look like this:
+With all components deployed, open the IP in `$SPA_GATEWAY_IP` in a
+browser. Expect it to look like below. The `Object Store` title refers
+to that this client allow us to read and write objects in an
+object-store.
 
 > ![Initial SPA page](images/spa-pre-login.png)
 
