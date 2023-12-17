@@ -8,7 +8,7 @@ using login with OIDC through a backend-for-frontend (BFF).
 The demonstration use the identity-provider from
 [michaelvl/oidc-oauth2-workshop](https://github.com/michaelvl/oidc-oauth2-workshop.git)
 and the BFF from
-[oidc-oauth2-bff](https://github.com/michaelvl/oidc-oauth2-bff.git)
+[michaelvl/oidc-oauth2-bff](https://github.com/michaelvl/oidc-oauth2-bff.git)
 
 Get a copy of these repositories:
 
