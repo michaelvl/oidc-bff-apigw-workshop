@@ -3,8 +3,28 @@
 This repo contain a demonstration of a single-page application (SPA)
 using login with OIDC through a backend-for-frontend (BFF).
 
+The illustration below show the architecture of the demonstration.
+
 > ![Architecture](images/bff-overview.png)
 
+Legend:
+1. Initially, the browser loads static HTML/Javascript from the `cdn`.
+2. When clicking `Login`, the browser SPA requests the BFF to initiate the OIDC login.
+3. On a `Login` request, the BFF redirects the browser to the
+   `identity-provider` to complete the OIDC login.
+4. After a successful login, the BFF completes the login and obtains
+   tokens from the `identity-provider`. This includes identity token
+   and refresh token, which is stored in a Redis-based
+   `session-storage`.
+5. When the SPA accesses the API, it is through the `api-gw`.
+6. The `api-gw` use the session cookie to lookup the sessions data
+   with tokens.
+7. The `api-gw` adds a HTTP `Authorization` header with the identity
+   token as a bearer token.
+8. The `protected-api` authorizes access based on the bearer token.
+   
+Between the browser and the backends, HTTP-only cookies are used and
+the SPA is never in possession of secrets or tokens.
 
 ## Prerequisites
 
