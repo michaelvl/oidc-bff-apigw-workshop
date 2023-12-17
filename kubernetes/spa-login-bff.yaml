@@ -22,9 +22,9 @@ spec:
         workingDir: /apps/bff
         env:
         - name: CLIENT_ID
-          value: client_id
+          value: spa-oidc-client
         - name: CLIENT_SECRET
-          value: client-secret-unused-idp-accept-all-clients
+          value: spa-oidc-client-secret-unused-idp-accept-all-clients
         - name: REDIRECT_URL
           value: http://${SPA_GATEWAY_IP}
         - name: OIDC_ISSUER_URL
