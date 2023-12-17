@@ -15,7 +15,7 @@ spec:
         app: spa-login-bff
     spec:
       containers:
-      - image: ghcr.io/michaelvl/oidc-oauth2-bff:latest
+      - image: ghcr.io/michaelvl/oidc-oauth2-bff:sha-500041e
         imagePullPolicy: IfNotPresent
         name: client
         command: ["node", "dist/index.js"]
