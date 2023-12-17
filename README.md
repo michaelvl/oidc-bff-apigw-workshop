@@ -75,11 +75,23 @@ cat oidc-bff-apigw-workshop/kubernetes/spa-login-bff.yaml | envsubst | kubectl a
 
 **TODO: Deploy api-gw and object store**
 
+```
+kubectl apply -f oidc-bff-apigw-workshop/kubernetes/spa-api-gw.yaml
+cat oidc-oauth2-workshop/kubernetes/protected-api.yaml | envsubst | kubectl apply -f -
+```
 
-With all components deployed, open the IP in `$SPA_GATEWAY_IP` in a
-browser. Expect it to look like below. The `Object Store` title refers
-to that this client allow us to read and write objects in an
-object-store.
+
+```
+stern -l app=spa-login-bff
+stern -l app=spa-api-gw
+stern -l app=protected-api
+```
+
+
+With all components deployed, open the IP stored in environment
+varible `SPA_GATEWAY_IP` in a browser. Expect it to look like
+below. The `Object Store` title refers to that this client allow us to
+read and write objects in an object-store.
 
 > ![Initial SPA page](images/spa-pre-login.png)
 

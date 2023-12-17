@@ -15,7 +15,7 @@ spec:
         app: spa-cdn
     spec:
       containers:
-      - image: ghcr.io/michaelvl/oidc-bff-apigw-workshop:sha-d64daab
+      - image: ghcr.io/michaelvl/oidc-bff-apigw-workshop:sha-960b6b2
         imagePullPolicy: IfNotPresent
         name: cdn
         command: ["node", "src/index.js"]
