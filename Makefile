@@ -49,6 +49,11 @@ kind-load-image:
 run-cdn-local:
 	docker run --rm -e STATIC_FILES_PATH=/apps/spa -p 5030:5030 $(IMAGE)
 
+#################
+.PHONY: run-protected-api-local
+run-protected-api-local:
+	docker run --net host --rm -e STATIC_FILES_PATH=/apps/protected-api -e OIDC_ISSUER_URL=http://localhost:5001 -w /apps/protected-api -p 5010:5010 $(IMAGE)
+
 .PHONY: deploy-spa
 deploy-spa:
 	kubectl apply -f kubernetes/spa-cdn.yaml
